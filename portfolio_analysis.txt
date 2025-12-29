@@ -1,0 +1,83 @@
+================================================================================
+PORTFOLIO ANALYSIS
+Generated: 2025-12-29 15:03:47
+================================================================================
+✓ Authentication successful!
+
+================================================================================
+ACCOUNT: 5WZ85685
+================================================================================
+
+📊 ACCOUNT OVERVIEW
+  Net Liquidating Value: $25,617.25
+  Cash Balance:          $22,142.25
+  Equity Buying Power:   $46,943.51
+  Options Buying Power:  $23,471.76
+  Maintenance Req:       $2,114.39
+
+  Cash %:                86.4%
+  Capital Deployed:      13.6%
+
+📈 POSITIONS (2 total)
+--------------------------------------------------------------------------------
+
+  EQUITIES (2)
+  ----------------------------------------------------------------------------
+  POET     | Qty:      200 | Avg: $    6.48 | Current: $    6.81
+           | Value: $  1,362.00 | P&L: +$   66.06 (+  5.10%)
+
+  SNDX     | Qty:      100 | Avg: $   14.28 | Current: $   21.30
+           | Value: $  2,130.00 | P&L: +$  702.00 (+ 49.16%)
+
+  Total Equity Value: $3,492.00
+  Equity Allocation:  13.6% of portfolio
+
+📋 LIVE ORDERS (8)
+--------------------------------------------------------------------------------
+  Order Type: Limit | Status: Filled
+    - Sell to Close 1 SOFI  260618C00017000
+
+  Order Type: Limit | Status: Filled
+    - Sell to Close 300 DVLT
+
+  Order Type: Limit | Status: Filled
+    - Sell to Close 200 ORCL
+
+  Order Type: Limit | Status: Filled
+    - Sell to Close 300 ASST
+
+  Order Type: Limit | Status: Filled
+    - Sell to Close 5 ASST  260618C00000500
+
+  Order Type: Limit | Status: Filled
+    - Sell to Close 3 CAN   260417C00000500
+
+  Order Type: Limit | Status: Filled
+    - Sell to Close 1 PONY  260515C00015000
+
+  Order Type: Limit | Status: Filled
+    - Sell to Close 2 NVTS  260618C00006000
+
+
+================================================================================
+ACCOUNT: 5WZ85684
+================================================================================
+
+📊 ACCOUNT OVERVIEW
+  Net Liquidating Value: $0.00
+  Cash Balance:          $0.00
+  Equity Buying Power:   $0.00
+  Options Buying Power:  $0.00
+  Maintenance Req:       $0.00
+
+📈 POSITIONS (0 total)
+--------------------------------------------------------------------------------
+  No positions found.
+
+================================================================================
+PORTFOLIO SUMMARY
+================================================================================
+Total Net Liquidating Value: $25,617.25
+Number of Accounts: 2
+
+================================================================================

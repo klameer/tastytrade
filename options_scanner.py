@@ -20,7 +20,8 @@ def safe_float(value, default=0.0):
 class OptionsScanner:
     """Scanner for high-probability options trades."""
     
-    def __init__(self, min_iv_rank=50, target_dte=45, max_dte=60):
+    def __init__(self, min_iv_rank=50, target_dte=45, max_dte=60, 
+                 avoid_earnings=True, earnings_window_days=7):
         """
         Initialize scanner.
         
@@ -28,12 +29,25 @@ class OptionsScanner:
             min_iv_rank: Minimum IV rank for screening (default 50%)
             target_dte: Target days to expiration (default 45)
             max_dte: Maximum days to expiration (default 60)
+            avoid_earnings: If True, filter out symbols with upcoming earnings
+            earnings_window_days: Days ahead to check for earnings (default 7)
         """
         self.client = TastytradeClient()
         self.min_iv_rank = min_iv_rank
         self.target_dte = target_dte
         self.max_dte = max_dte
+        self.avoid_earnings = avoid_earnings
+        self.earnings_window_days = earnings_window_days
         self.opportunities = []
+        
+        # Initialize earnings calendar
+        try:
+            from earnings_calendar import EarningsCalendar
+            self.earnings_calendar = EarningsCalendar()
+        except:
+            self.earnings_calendar = None
+            if avoid_earnings:
+                print("⚠️  Earnings calendar not available - can't filter earnings")
     
     def scan_for_opportunities(self, symbols=None, max_symbols=20):
         """
@@ -82,8 +96,40 @@ class OptionsScanner:
         
         print(f"\n✓ Found {len(high_iv_candidates)} symbols with IV Rank > {self.min_iv_rank}%")
         
+        # Filter out earnings if enabled
+        if self.avoid_earnings and self.earnings_calendar:
+            print(f"\n📅 Checking for earnings in next {self.earnings_window_days} days...")
+            
+            filtered_candidates = []
+            earnings_filtered = []
+            
+            for candidate in high_iv_candidates:
+                symbol = candidate['symbol']
+                earnings_info = self.earnings_calendar.check_symbol_earnings(
+                    symbol, days_ahead=self.earnings_window_days
+                )
+                
+                if earnings_info:
+                    earnings_filtered.append({
+                        'symbol': symbol,
+                        'earnings_date': earnings_info['earnings_date'],
+                        'days_until': earnings_info['days_until']
+                    })
+                else:
+                    filtered_candidates.append(candidate)
+            
+            if earnings_filtered:
+                print(f"\n  ⚠️  Filtered out {len(earnings_filtered)} symbols with upcoming earnings:")
+                for item in earnings_filtered[:5]:  # Show first 5
+                    print(f"    {item['symbol']:6} - Earnings in {item['days_until']} days ({item['earnings_date']})")
+                if len(earnings_filtered) > 5:
+                    print(f"    ... and {len(earnings_filtered) - 5} more")
+            
+            high_iv_candidates = filtered_candidates
+            print(f"\n✓ {len(high_iv_candidates)} symbols after earnings filter")
+        
         if not high_iv_candidates:
-            print("\n⚠️  No opportunities found. Try lowering min_iv_rank.")
+            print("\n⚠️  No opportunities found. Try lowering min_iv_rank or disabling earnings filter.")
             return []
         
         # Sort by IV rank (highest first)
